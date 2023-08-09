@@ -1,0 +1,5 @@
+.TodoCard {}
+
+.TodoCard h3 {
+    color: var(--text-color);
+}
