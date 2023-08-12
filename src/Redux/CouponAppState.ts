@@ -4,6 +4,7 @@ import { CouponModel } from '../Models/Coupon'; // Updated import
 
 interface CouponState { // Updated interface name
     coupons: CouponModel[]; // Updated array name
+    couponsAll: CouponModel[]; // Updated array name
     couponsByMaxPrice: CouponModel[];
     couponsByCategory: CouponModel[];
 }
@@ -11,6 +12,7 @@ interface CouponState { // Updated interface name
 //This is the initialized Task Application State - initialize within empty array
 const initialState: CouponState = { // Updated state name
     coupons: [], // Updated array name
+    couponsAll: [], // Updated array name
     couponsByMaxPrice:[],
     couponsByCategory:[],
 };
@@ -30,6 +32,9 @@ const couponsSlice = createSlice({
     reducers: {
         gotAllCouponAction(state, action: PayloadAction<CouponModel[]>) { // Updated action name
             state.coupons = action.payload; // Updated array name
+        },
+        gotAllCouponAllAction(state, action: PayloadAction<CouponModel[]>) { // Updated action name
+            state.couponsAll = action.payload; // Updated array name
         },
         gotAllCouponByMaxPriceAction(state, action: PayloadAction<CouponModel[]>) { // Updated action name
             state.couponsByMaxPrice = action.payload; // Updated array name
@@ -57,6 +62,7 @@ const couponsSlice = createSlice({
 //This is the exported tasks
 export const {
     gotAllCouponAction,
+    gotAllCouponAllAction,
     gotAllCouponByMaxPriceAction,
     gotAllCouponByCategoryAction,
     addedCouponAction,

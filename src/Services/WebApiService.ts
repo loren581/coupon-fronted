@@ -126,7 +126,41 @@ class WebApiService {
         const headers = { 'Authorization': store.getState().userReducer.user.token };
         return axios.get<any>(`${urlService.admin+"/customers"}/${id}`, { headers });
     }
+    public getAllCouponsByCategoryAsCustomer(val: string): Promise<AxiosResponse<CouponModel[]>> {
+        const headers = {'Authorization': store.getState().userReducer.user.token};
+        const url = `${urlService.customer}/coupons/category`;
+    
+        return axios.get<CouponModel[]>(url, {
+            params: { val }, // Pass the maxPrice as a parameter
+            headers: headers
+        });
+    }
 
+    public getAllCouponsByMaxPriceAsCustomer(val: number): Promise<AxiosResponse<CouponModel[]>> {
+        const headers = {'Authorization': store.getState().userReducer.user.token};
+        const url = `${urlService.customer}/coupons/maxPrice`;
+    
+        return axios.get<CouponModel[]>(url, {
+            params: { val }, // Pass the maxPrice as a parameter
+            headers: headers
+        });
+    }
+
+    public getAllCouponsAsCustomer(): Promise<AxiosResponse<CouponModel[]>> {
+        const headers= {'Authorization': store.getState().userReducer.user.token}
+        return axios.get<CouponModel[]>(urlService.customer+"/coupons",{headers});
+    }
+
+    public getAllCouponsAll(): Promise<AxiosResponse<CouponModel[]>> {
+        const headers= {'Authorization': store.getState().userReducer.user.token}
+        return axios.get<CouponModel[]>(urlService.customer+"/coupons/all",{headers});
+    }
+
+    public purchaseCoupon(id: number): Promise<AxiosResponse<void>> {
+        const headers = { 'Authorization': store.getState().userReducer.user.token };
+        console.log(headers);
+        return axios.post<void>(`${urlService.customer}/${id}`,null ,{ headers });
+    }
     
     
 

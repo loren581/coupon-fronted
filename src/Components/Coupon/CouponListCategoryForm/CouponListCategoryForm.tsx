@@ -6,11 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 // import urlService from "../../../Services/UrlService";
 import notifyService from "../../../Services/NotificationService";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import webApiService from "../../../Services/WebApiService";
 import { gotAllCouponByCategoryAction } from "../../../Redux/CouponAppState";
 import { CategoryModel } from "../../../Models/Category";
+import { RootState } from "../../../Redux/Store";
 function CouponListCategoryForm(): JSX.Element {
+    const clientType = useSelector((state: RootState) => state.guardReducer.clientType);
 
     const navigate = useNavigate();
 
@@ -31,7 +33,7 @@ function CouponListCategoryForm(): JSX.Element {
 
     const onSubmit: SubmitHandler<CategoryModel> = (data: CategoryModel) => {
 
-        return webApiService.getAllCouponsByCategory(data.category)
+      if(clientType=="COMPANY"){  return webApiService.getAllCouponsByCategory(data.category)
             .then(res => {
                 notifyService.success('your results are ready');
 dispatch(gotAllCouponByCategoryAction(res.data))                
@@ -42,7 +44,18 @@ console.log(res.data);
 
 
 
-    };
+    }
+else if(clientType=="CUSTOMER"){
+    return webApiService.getAllCouponsByCategoryAsCustomer(data.category)
+    .then(res => {
+        notifyService.success('your results are ready');
+dispatch(gotAllCouponByCategoryAction(res.data))                
+console.log(res.data);
+        navigate("/coupons/category/list")
+    })
+    .catch(err => notifyService.error(err))
+
+}};
 
 
 
@@ -50,7 +63,7 @@ console.log(res.data);
 
     return (
         <div className="search form-look-and-feel">
-            <h1>Add new Company</h1>
+            <h1>Search</h1>
 
 
             <form onSubmit={(...args) => void handleSubmit(onSubmit)(...args)}>

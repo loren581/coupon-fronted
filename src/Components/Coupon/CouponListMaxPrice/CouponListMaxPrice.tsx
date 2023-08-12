@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 // import urlService from "../../../Services/UrlService";
 import notifyService from "../../../Services/NotificationService";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import webApiService from "../../../Services/WebApiService";
 import { CompanyModel } from "../../../Models/Company";
 import { addedCompanyAction } from "../../../Redux/CompanyAppState";
@@ -15,7 +15,10 @@ import { CompanyModelAdd } from "../../../Models/CompanyAdd";
 import {  maxPriceModel } from '../../../Models/maxPrice';
 import CouponCard from "../CouponCard/CouponCard";
 import { gotAllCouponByMaxPriceAction } from "../../../Redux/CouponAppState";
+import { RootState } from "../../../Redux/Store";
 function CouponListMaxPrice(): JSX.Element {
+    const clientType = useSelector((state: RootState) => state.guardReducer.clientType);
+
 
     const navigate = useNavigate();
 
@@ -35,7 +38,7 @@ function CouponListMaxPrice(): JSX.Element {
 
 
     const onSubmit: SubmitHandler<maxPriceModel> = (data: maxPriceModel) => {
-
+if(clientType==="COMPANY"){
         return webApiService.getAllCouponsByMaxPrice(data.maxPrice)
             .then(res => {
                 notifyService.success('your results are ready');
@@ -47,7 +50,21 @@ console.log(res.data);
 
 
 
-    };
+    }
+    else if(clientType==="CUSTOMER"){
+        return webApiService.getAllCouponsByMaxPriceAsCustomer(data.maxPrice)
+            .then(res => {
+                notifyService.success('your results are ready');
+dispatch(gotAllCouponByMaxPriceAction(res.data))                
+console.log(res.data);
+                navigate("/coupons/maxPrice/list")
+            })
+            .catch(err => notifyService.error(err))
+
+
+
+    }};
+    
 
 
 
@@ -55,7 +72,7 @@ console.log(res.data);
 
     return (
         <div className="search form-look-and-feel">
-            <h1>Add new Company</h1>
+            <h1>Search</h1>
 
 
             <form onSubmit={(...args) => void handleSubmit(onSubmit)(...args)}>

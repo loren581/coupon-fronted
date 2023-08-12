@@ -35,6 +35,9 @@ import SingleCompanyCard from "../../Company/SingleCompanyCard/SingleCompanyCard
 import SingleCompany from "../../Company/SingleCompany/SingleCompany";
 import SingleCustomerCard from "../../Customer/SingleCustomerCard/SingleCustomerCard";
 import SingleCustomer from "../../Customer/SingleCustomer/SingleCustomer";
+import CouponListAll from "../../Coupon/CouponListAll/CouponListAll";
+import PurchaseCoupon from "../../Coupon/PurchaseCoupon/PurchaseCoupon";
+import CouponListCustomer from "../../Coupon/CouponListCustomer/CouponListCustomer";
 
 function Routing(): JSX.Element {
     const clientType = useSelector((state: RootState) => state.guardReducer.clientType);
@@ -60,6 +63,9 @@ function Routing(): JSX.Element {
                 <Route path="/coupons/update/:id" element={<UpdateCoupon/>} />
                 {clientType==="ADMINISTRATOR" && <Route path="/companies/delete/:id" element={<DeleteCompany />} />}
                 {clientType==="ADMINISTRATOR" &&<Route path="/customers/delete/:id" element={<DeleteCustomer />} />}
+                {clientType==="CUSTOMER" &&<Route path="/coupons/purchase/:id" element={<PurchaseCoupon />} />}
+                {clientType==="CUSTOMER" &&<Route path="/coupons" element={<CouponListCustomer />} />}
+                {clientType==="CUSTOMER" &&<Route path="/coupons/all" element={<CouponListAll />} />}
                 {clientType==="ADMINISTRATOR" && <Route path="/companies/:id" element={<SingleCompanyCard />} />}
                 {clientType==="ADMINISTRATOR" &&<Route path="/customers/:id" element={<SingleCustomerCard />} />}
                 {clientType==="ADMINISTRATOR" &&<Route path="/companies/search" element={<SingleCompany />} />}
@@ -68,10 +74,11 @@ function Routing(): JSX.Element {
                 {clientType==="ADMINISTRATOR" &&<Route path="/companies" element={<CompanyList />} />}
                 {clientType==="ADMINISTRATOR" &&<Route path="/customers" element={<CustomerList />} />}
                 {clientType==="COMPANY" &&<Route path="/coupons" element={<CouponList />} />}
-                {clientType==="COMPANY" &&<Route path="/coupons/maxPrice/form" element={<CouponListMaxPrice />} />}
-                {clientType==="COMPANY" &&<Route path="/coupons/category/form" element={<CouponListCategoryForm />} />}
-                {clientType==="COMPANY" &&<Route path="/coupons/maxPrice/list" element={<CouponListMaxPriceList />} />}
-                {clientType==="COMPANY" &&<Route path="/coupons/category/list" element={<CouponListCategoryList />} />}
+                {clientType==="COMPANY" ||"CUSTOMER" &&<Route path="/coupons/maxPrice/form" element={<CouponListMaxPrice />} />}
+                {clientType==="COMPANY"||"CUSTOMER" &&<Route path="/coupons/category/form" element={<CouponListCategoryForm />} />}
+                {clientType==="COMPANY"||"CUSTOMER" &&<Route path="/coupons/maxPrice/list" element={<CouponListMaxPriceList />} />}
+                {clientType==="COMPANY" ||"CUSTOMER" &&<Route path="/coupons/category/list" element={<CouponListCategoryList />} />}
+                {clientType==="CUSTOMER" &&<Route path="/coupons/purchase" element={<CouponListAll />} />}
                 <Route path="*" element={<Page404/>} />
             </Routes>
         </div>

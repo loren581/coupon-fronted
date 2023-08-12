@@ -18,8 +18,10 @@ function Menu(): JSX.Element {
             {clientType==="ADMINISTRATOR" &&<Link to={"/customers/search"}>search customer by id</Link>}
             {clientType==="COMPANY" &&<Link to={"/coupons/add"}>➕ new coupon</Link>}
             {clientType==="COMPANY" &&<Link to={"/coupons"}>Your coupons</Link>}
-            {clientType==="COMPANY" &&<Link to={"/coupons/maxPrice/form"}>Your coupons by max price</Link>}
-            {clientType==="COMPANY" &&<Link to={"/coupons/category/form"}>Your coupons by category</Link>}
+            {clientType==="COMPANY" ||"CUSTOMER"  &&<Link to={"/coupons/maxPrice/form"}>Your coupons by max price</Link>}
+            {clientType==="CUSTOMER" &&<Link to={"/coupons/all"}>Purchase</Link>}
+            {clientType==="CUSTOMER" &&<Link to={"/coupons"}>Your Coupons</Link>}
+            {clientType==="COMPANY" ||"CUSTOMER" &&<Link to={"/coupons/category/form"}>Your coupons by category</Link>}
             <Link to={"/about"}>🤯 About</Link>
         </div>
     );
