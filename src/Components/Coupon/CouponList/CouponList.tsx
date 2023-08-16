@@ -39,7 +39,7 @@ function CouponList(): JSX.Element {
     
     return (
         <div className="CouponList">
-			            <h1>Customer List</h1>
+			            <h1>Coupon List</h1>
 
 {
     (coupons.length !== 0) ?

@@ -1,6 +1,5 @@
 // This is Store.ts file
 import { configureStore } from '@reduxjs/toolkit';
-import { tasksReducer } from './TaskAppState';
 import { userReducer } from './UserAppState';
 import { guardReducer } from './GuardAppState';
 import { comppaniesReducer } from './CompanyAppState';
@@ -9,7 +8,6 @@ import { couponsReducer } from './CouponAppState';
 
 // This is rootReducer
 const rootReducer = {
-    tasksReducer: tasksReducer,
     userReducer: userReducer,
     guardReducer: guardReducer,
     companiesReducer: comppaniesReducer,

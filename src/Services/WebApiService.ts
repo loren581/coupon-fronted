@@ -12,6 +12,7 @@ import { userReducer } from '../Redux/UserAppState';
 import { CouponModelAdd } from '../Models/CouponModelAdd';
 import { CouponModelUpdate } from '../Models/CouponModelUpdate';
 import { maxPriceModel } from '../Models/maxPrice';
+import { CouponCustomerModel } from '../Models/CouponCustomer';
 class WebApiService {
 
     public login(data: LoginReqModel): Promise<AxiosResponse<LoginResModel>> {
@@ -90,9 +91,9 @@ class WebApiService {
         return axios.get<CouponModel[]>(urlService.company+"/coupons",{headers});
     }
     
-    public updateCoupon(id: number, coupon: CouponModel): Promise<AxiosResponse<void>> {
+    public updateCoupon(id: number, coupon: CouponModel): Promise<AxiosResponse<CouponModel>> {
         const headers = { 'Authorization': store.getState().userReducer.user.token }
-        return axios.put<void>(`${urlService.company}/${id}`, coupon, { headers });
+        return axios.put<CouponModel>(`${urlService.company}/${id}`, coupon, { headers });
     }
     public deleteCoupon(id: number): Promise<AxiosResponse<any>> {
         const headers = { 'Authorization': store.getState().userReducer.user.token };
@@ -151,15 +152,15 @@ class WebApiService {
         return axios.get<CouponModel[]>(urlService.customer+"/coupons",{headers});
     }
 
-    public getAllCouponsAll(): Promise<AxiosResponse<CouponModel[]>> {
+    public getAllCouponsAll(): Promise<AxiosResponse<CouponCustomerModel[]>> {
         const headers= {'Authorization': store.getState().userReducer.user.token}
-        return axios.get<CouponModel[]>(urlService.customer+"/coupons/all",{headers});
+        return axios.get<CouponCustomerModel[]>(urlService.customer+"/coupons/all",{headers});
     }
 
-    public purchaseCoupon(id: number): Promise<AxiosResponse<void>> {
+    public purchaseCoupon(id: number): Promise<AxiosResponse<CouponModel>> {
         const headers = { 'Authorization': store.getState().userReducer.user.token };
         console.log(headers);
-        return axios.post<void>(`${urlService.customer}/${id}`,null ,{ headers });
+        return axios.post<CouponModel>(`${urlService.customer}/${id}`,null ,{ headers });
     }
     
     

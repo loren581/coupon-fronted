@@ -23,8 +23,8 @@ function AddCoupon(): JSX.Element {
 
     const schema = zod.object({
         category: zod.enum(["FOOD", "HEALTH", "VACATION","COMPUTER","SPORT"]),
-        title: zod.string(),
-        description: zod.string(),
+        title: zod.string().nonempty("you must enter title"),
+        description: zod.string().nonempty("you must enter description"),
         startDate: zod.string().transform((dateString, ctx) => {
           const date = new Date(dateString);
           if (!zod.date().safeParse(date).success) {
@@ -48,7 +48,7 @@ function AddCoupon(): JSX.Element {
         amount: zod.number(),
         price: zod.number(),
         
-        image: zod.string()
+        image: zod.string().nonempty("you must enter image")
       });
       
     

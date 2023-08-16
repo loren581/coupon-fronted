@@ -10,7 +10,6 @@ import { useDispatch } from "react-redux";
 import store from "../../../Redux/Store";
 import { CouponModelAdd } from "../../../Models/CouponModelAdd";
 import { updatedCouponAction } from "../../../Redux/CouponAppState";
-import { CouponModelUpdate } from "../../../Models/CouponModelUpdate";
 import { CouponModel } from "../../../Models/Coupon";
 
 function UpdateCoupon(): JSX.Element {
@@ -28,8 +27,8 @@ function UpdateCoupon(): JSX.Element {
     const schema = zod.object({
         id:zod.number(),
         category: zod.enum(["FOOD", "HEALTH", "VACATION","COMPUTER","SPORT"]),
-        title: zod.string(),
-        description: zod.string(),
+        title: zod.string().nonempty("YOU MUST ENTER TITLE"),
+        description: zod.string().nonempty("YOU MUST ENTER DESCRIPTION"),
         startDate: zod.string().transform((dateString, ctx) => {
             const date = new Date(dateString);
             if (!zod.date().safeParse(date).success) {
@@ -51,7 +50,7 @@ function UpdateCoupon(): JSX.Element {
         amount: zod.number(),
         price: zod.number(),
         
-        image: zod.string()
+        image: zod.string().nonempty("YOU MUST ENTER IMAGE")
       });
 
     const { register, handleSubmit, formState: { errors, isValid, isSubmitting } } =
@@ -60,8 +59,12 @@ function UpdateCoupon(): JSX.Element {
     const onSubmit: SubmitHandler<CouponModel> = (data: CouponModel) => {
         return webApiService.updateCoupon(id, data) // Update with the correct method
             .then(res => {
-                notifyService.success(`Updated customer #${id} successfully`);
-                dispatch(updatedCouponAction(data)); // Update with the correct action
+                console.log(data);
+                console.log(res.data);
+                notifyService.success(`Updated coupon #${id} successfully`);
+                dispatch(updatedCouponAction(res.data)); 
+                
+                // Update with the correct action
                 navigate("/coupons");
             })
             .catch(err => notifyService.error(err));
@@ -101,7 +104,7 @@ function UpdateCoupon(): JSX.Element {
 <input {...register("amount",{valueAsNumber:true})} name="amount" type="number" placeholder="Amount..." />
 
 {(errors?.price) ? <span>{errors.price.message}</span> : <label htmlFor="price">Price</label>}
-<input {...register("price",{valueAsNumber:true})} name="price" type="number" placeholder="Price..." />
+<input {...register("price",{valueAsNumber:true})} step={0.01} name="price" type="number" placeholder="Price..." />
 
 {(errors?.image) ? <span>{errors.image.message}</span> : <label htmlFor="image">Image URL</label>}
 <input {...register("image")} name="image" type="text" placeholder="Image URL..." />

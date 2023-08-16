@@ -1,4 +1,6 @@
-export interface CouponModelAdd {
+export interface CouponCustomerModel {
+  id:number;
+  companyName:string;
     category: string;
     title: string;
     description: string;

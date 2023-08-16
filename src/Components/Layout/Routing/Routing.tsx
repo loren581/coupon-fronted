@@ -4,15 +4,8 @@ import App from "../../../App";
 import Home from "../../Pages/Home/Home";
 import About from "../../Pages/About/About";
 import Page404 from "../../Pages/Page404/Page404";
-import TodoList from "../../Todo/TodoList/TodoList";
-import AddTodo from "../../Todo/AddTodo/AddTodo";
-import UpdateTodo from "../../Todo/UpdateTodo/UpdateTodo";
-import DeleteTodo from "../../Todo/DeleteTodo/DeleteTodo";
 import Login from "../../Auth/Login/Login";
 import Logout from "../../Auth/Logout/Logout";
-import Regiser from "../../Auth/Regiser/Regiser";
-import TaskList from "../../Admin/TaskList/TaskList";
-import UserList from "../../Admin/UserList/UserList";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Redux/Store";
 import CompanyList from "../../Company/CompanyList/CompanyList";
@@ -50,7 +43,6 @@ function Routing(): JSX.Element {
                 <Route index element={<Home/>} />
                 <Route path="/about" element={<About/>} />
                 <Route path="/login" element={<Login/>} />
-                <Route path="/register" element={<Regiser/>} />
                 <Route path="/logout" element={<Logout/>} />
                 {clientType==="ADMINISTRATOR" &&<Route path="/customers/add" element={<AddCustomer/>} />}
 
@@ -74,10 +66,10 @@ function Routing(): JSX.Element {
                 {clientType==="ADMINISTRATOR" &&<Route path="/companies" element={<CompanyList />} />}
                 {clientType==="ADMINISTRATOR" &&<Route path="/customers" element={<CustomerList />} />}
                 {clientType==="COMPANY" &&<Route path="/coupons" element={<CouponList />} />}
-                {clientType==="COMPANY" ||"CUSTOMER" &&<Route path="/coupons/maxPrice/form" element={<CouponListMaxPrice />} />}
-                {clientType==="COMPANY"||"CUSTOMER" &&<Route path="/coupons/category/form" element={<CouponListCategoryForm />} />}
-                {clientType==="COMPANY"||"CUSTOMER" &&<Route path="/coupons/maxPrice/list" element={<CouponListMaxPriceList />} />}
-                {clientType==="COMPANY" ||"CUSTOMER" &&<Route path="/coupons/category/list" element={<CouponListCategoryList />} />}
+                {(clientType==="COMPANY" || clientType==="CUSTOMER") &&<Route path="/coupons/maxPrice/form" element={<CouponListMaxPrice />} />}
+                {(clientType==="COMPANY"|| clientType==="CUSTOMER") &&<Route path="/coupons/category/form" element={<CouponListCategoryForm />} />}
+                {(clientType==="COMPANY"||clientType==="CUSTOMER") &&<Route path="/coupons/maxPrice/list" element={<CouponListMaxPriceList />} />}
+                {(clientType==="COMPANY" ||clientType==="CUSTOMER") &&<Route path="/coupons/category/list" element={<CouponListCategoryList />} />}
                 {clientType==="CUSTOMER" &&<Route path="/coupons/purchase" element={<CouponListAll />} />}
                 <Route path="*" element={<Page404/>} />
             </Routes>

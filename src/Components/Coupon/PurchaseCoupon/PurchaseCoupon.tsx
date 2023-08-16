@@ -1,9 +1,12 @@
 import notifyService from "../../../Services/NotificationService";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import webApiService from "../../../Services/WebApiService";
 import { useParams, useNavigate } from 'react-router-dom'; // Import the missing hooks
+import { addedCouponAction } from "../../../Redux/CouponAppState";
+import { RootState } from "../../../Redux/Store";
 
 function PurchaseCoupon(): JSX.Element { // Rename the function to DeleteCoupon
+
 
     const dispatch = useDispatch();
 
@@ -14,8 +17,9 @@ function PurchaseCoupon(): JSX.Element { // Rename the function to DeleteCoupon
 
     const yes = () => {
         webApiService.purchaseCoupon(id) // Update with the correct delete method
-            .then(() => {
+            .then(res => {
                 notifyService.success(`Purchased coupon #${id} successfully`);
+                dispatch(addedCouponAction(res.data))
                 navigate(-1);
             })
             .catch(err => notifyService.error(err.response.data.description))

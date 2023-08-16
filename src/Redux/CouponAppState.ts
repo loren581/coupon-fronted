@@ -1,10 +1,11 @@
 //This is TaksAppState.ts file
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CouponModel } from '../Models/Coupon'; // Updated import
+import { CouponCustomerModel } from '../Models/CouponCustomer';
 
 interface CouponState { // Updated interface name
     coupons: CouponModel[]; // Updated array name
-    couponsAll: CouponModel[]; // Updated array name
+    couponsAll: CouponCustomerModel[]; // Updated array name
     couponsByMaxPrice: CouponModel[];
     couponsByCategory: CouponModel[];
 }
@@ -33,7 +34,7 @@ const couponsSlice = createSlice({
         gotAllCouponAction(state, action: PayloadAction<CouponModel[]>) { // Updated action name
             state.coupons = action.payload; // Updated array name
         },
-        gotAllCouponAllAction(state, action: PayloadAction<CouponModel[]>) { // Updated action name
+        gotAllCouponAllAction(state, action: PayloadAction<CouponCustomerModel[]>) { // Updated action name
             state.couponsAll = action.payload; // Updated array name
         },
         gotAllCouponByMaxPriceAction(state, action: PayloadAction<CouponModel[]>) { // Updated action name
